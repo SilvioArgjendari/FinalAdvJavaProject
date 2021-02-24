@@ -49,5 +49,13 @@ public class BookController implements IController<Book> {
     public void destroy(Book book) {
         FactoryDAO.getBookDao().destoy(book);
     }
+    
+//    public List<Book> getBooksByAvgRating() {
+//        List<Book> allBooks = index();
+//        
+//        
+//        return allBooks.stream()
+//                .
+//    }
 
 }

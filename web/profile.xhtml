@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Profile</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <nav>
+            <div>
+                <h1>Welcome #{userBean.currentUser.name} #{userBean.currentUser.surname}</h1>
+                <h:form>
+                    <h:commandLink value="Log Out" action="#{userBean.logout}" rendered="#{userBean.hasCurrentUser()}"/>
+                </h:form>
+            </div>
+        </nav>
+        
+        <h1>Update Profile</h1>
+        <h:form>
+            <h:panelGrid columns="2">
+                <h:outputText value="Name"/>
+                <h:inputText value="#{userBean.name}" />
+
+                <h:outputText value="Surname"/>
+                <h:inputText value="#{userBean.surname}" />
+
+                <h:outputText value="Email"/>
+                <h:inputText value="#{userBean.email}" />
+                
+                <h:outputText value="Password"/>
+                <h:inputText value="#{userBean.password}" />
+            </h:panelGrid>
+            
+            <h:commandLink value="Submit" action="#{userBean.updateProfile}" />
+        </h:form>
+    </h:body>
+</html>

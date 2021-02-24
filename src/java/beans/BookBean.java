@@ -31,10 +31,11 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class BookBean implements Serializable {
 //    @Inject
+    private UserBean userBean;
     private List<Book> allBooks;
     private List<Book> recentlyAddedBooks;
     private List<Book> topRatedBooks;
-//    private Book book;
+    private Book book;
     
     /**
      * Creates a new instance of BookBean
@@ -78,23 +79,13 @@ public class BookBean implements Serializable {
         return !allBooks.isEmpty();
     }
     
-//    public Book getBook() {
-//        return book;
-//    }
-//
-//    public void setBook(Book book) {
-//        this.book = book;
-//    }
-    
-    
+    public Book getBook() {
+        return book;
+    }
 
-//    public Book getBook() {
-//        return book;
-//    }
-//
-//    public void setBook(Book book) {
-//        this.book = book;
-//    }
+    public void setBook(Book book) {
+        this.book = book;
+    }
     
     
     
@@ -102,9 +93,28 @@ public class BookBean implements Serializable {
         allBooks = BookController.getInstance().index();
     }
     
-//    public void reloadBook() {
-//        book = BookController.getInstance().show(book.getId());
-//    }
+    public void reloadBook() {
+        book = BookController.getInstance().show(book.getId());
+    }
+    
+    public String actionReload() {
+        loadList();
+        return "index";
+    }
+    
+    public String prepareView(Book book) {
+        if (book != null)
+            this.book = book;
+        return "view-book";
+    }
+    
+    public String prepareCreate() {
+        if (userBean.hasCurrentUser()) {
+            return "login";
+        }
+        book = new Book();
+        return "index";    
+    }
     
     public void mostRecentlyAdded() {
         List<Book> lst = BookController.getInstance().index();
@@ -112,8 +122,14 @@ public class BookBean implements Serializable {
         recentlyAddedBooks = lst.stream()
                 .sorted(Comparator.comparingInt((Book b) -> b.getId())
                         .reversed())
-                .limit(2)
-                .collect(Collectors.toList());
-        
+//                .limit(2)
+                .collect(Collectors.toList());   
     }
+    
+//    public void bestRated() {
+//        List<Book> lst = BookController.getInstance().index();
+//        
+//        topRatedBooks = lst.stream()
+//                .
+//    }
 }

@@ -30,10 +30,10 @@ public class Main {
     
     public static void main(String[] args) {
         Main app = new Main();
-        app.allBooks();
+//        app.allBooks();
 //        app.go();
 //        app.findABook();        // Works
-//        app.getAuthedUser();    // Works
+        app.getAuthedUser();    // Works
 //        app.allreviews();       // Works
 //        app.findReviewsOfFirstBook();   // Works
 //        app.oldMethod();      // Works
@@ -101,7 +101,7 @@ public class Main {
     
     private void getAuthedUser() {
         User user = uC.authenticateUser("silvio@email.com", "silvio123");
-        System.out.println(user.getName());
+        System.out.println(user.getType());
     }
     
     private void oldMethod() {
