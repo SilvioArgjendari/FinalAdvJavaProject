@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <div>
+            <h:form>
+                <f:metadata>
+                    <f:viewParam name="bookId" value="#{bookDetailBean.bookId}"/>
+                    <f:event type="preRenderView" listener="#{bookDetailBean.init}" />
+                </f:metadata>
+
+                <h:panelGrid id="panelGrid" columns="2" cellpadding="3" cellspacing="1" columnClasses="left-column,right-column">
+                    <h:outputText value="hashCode" />
+                    <h:outputText value="#{bookDetailBean.hashCode()}"/>
+
+                    <h:outputText value="Thumbnail" />
+                    <h:outputText value="#{bookDetailBean.book.thumbnail}"/>
+                    
+                    <h:outputText value="Title" />
+                    <h:outputText value="#{bookDetailBean.book.title}"/>
+
+                    <h:outputText value="Author" />
+                    <h:outputText value="#{bookDetailBean.book.author}"/>
+
+                    <h:outputText value="Publishing House" />
+                    <h:outputText value="#{bookDetailBean.book.publishingHouse}"/>
+
+                    <h:outputText value="Publication Year" />
+                    <h:outputText value="#{bookDetailBean.book.publicationYear}"/>
+
+                    <h:outputText value="Genre" />
+                    <h:outputText value="#{bookDetailBean.book.genre}"/>
+
+                    <h:outputText value="Date Added" />
+                    <h:outputText value="#{bookDetailBean.book.dateAdded}"/>
+                    
+                    <h:outputText value="Synopsis" />
+                    <h:outputText value="#{bookDetailBean.book.synopsis}"/>
+                    
+
+                    <f:facet name = "footer">
+                        <h:panelGroup>
+                            <h:commandLink value="Back" action="admin/admin-panel" />
+                            <h:outputText value=" " />
+                            <h:commandLink value="Update" action="book-update" >
+                                <f:param name="bookId" value="#{bookDetailBean.bookId}" />
+                            </h:commandLink>
+                        </h:panelGroup>
+                    </f:facet>            
+
+                </h:panelGrid>
+            </h:form>
+        </div>
+    </h:body>
+</html>

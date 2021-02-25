@@ -6,19 +6,16 @@
 package beans;
 
 import controller.BookController;
-import datatier.dao.BookDAO;
-import datatier.dao.FactoryDAO;
-import datatier.dao.IDAO;
 import datatier.persistence.entities.Book;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import javax.inject.Inject;
-import javax.inject.Named;
+//import javax.inject.Inject;
+//import javax.inject.Named;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
-import javax.annotation.PostConstruct;
+//import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 

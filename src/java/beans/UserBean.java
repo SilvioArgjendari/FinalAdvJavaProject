@@ -8,7 +8,8 @@ package beans;
 import controller.UserController;
 import datatier.persistence.entities.User;
 //import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
+//import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.SessionScoped;
 import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -47,6 +48,10 @@ public class UserBean implements Serializable {
 
     public boolean hasCurrentUser() {
         return currentUser != null;
+    }
+    
+    public boolean isAdmin() {
+        return currentUser.getType().equals("admin");
     }
 
 //    public User getNewUser() {
@@ -116,27 +121,19 @@ public class UserBean implements Serializable {
     }
 
     public String login() {
-//        try {
-//            currentUser = UserController.getInstance().authenticateUser(email, password);
-//            if (currentUser.equals(null)) {
-//                return "login";
-//            }
-//            if (currentUser.getType().equals("admin")) {
-//                return "admin-panel";
-//            }
-//            return "index";
-//        } catch (Exception e) {
-//            return null;
-//        }
-        currentUser = UserController.getInstance().authenticateUser(email, password);
-        if (currentUser.equals(null)) {
-            return "login";
+        try {
+            currentUser = UserController.getInstance().authenticateUser(email, password);
+            if (currentUser.equals(null)) {
+                return "login";
+            }
+            if (currentUser.getType().equals("admin")) {
+                return "admin/admin-panel";
+            }
+            return "index";
+        } catch (Exception e) {
+            return null;
         }
-        if (currentUser.getType().equals("admin")) {
-            return "admin-panel";
-        }
-        return "index";
-
+        
     }
 
     public String logout() {

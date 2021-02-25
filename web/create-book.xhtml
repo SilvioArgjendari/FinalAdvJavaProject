@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Change</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <div>
+            <h:form>
+                <h:panelGrid columns="2">
+                    
+                    <h:outputText value="Title" />
+                    <h:inputText value="#{createBookBean.title}" required="true" requiredMessage="Code must be provided" />
+
+                    <h:outputText value="Author" />
+                    <h:inputText value="#{createBookBean.author}" required="true" requiredMessage="Code2 must be provided"/>
+
+                    <h:outputText value="Publishing House" />
+                    <h:inputText value="#{createBookBean.publishingHouse}" required="true" requiredMessage="Name must be provided"/>
+                    
+                    <h:outputText value="Publishing Year" />
+                    <h:inputText value="#{createBookBean.publicationYear}" required="true" requiredMessage="Name must be provided"/>
+
+                    <h:outputText value="Genre" />
+                    <h:selectOneMenu value="#{createBookBean.genre}" required="true" requiredMessage="Continent must be provided" >
+                        <f:selectItem itemValue="Adventure" itemLabel="Adventure" />
+                        <f:selectItem itemValue="Historical" itemLabel="Historical" />
+                        <f:selectItem itemValue="Fantasy" itemLabel="Fantasy" />
+                        <f:selectItem itemValue="Literary Fiction" itemLabel="Literary Fiction" />
+                        <f:selectItem itemValue="Educational" itemLabel="Educational" />
+                        <f:selectItem itemValue="Horror" itemLabel="Horror" />
+                        <f:selectItem itemValue="Science Fiction" itemLabel="Science Fiction" />
+                        <f:selectItem itemValue="Realist Literature" itemLabel="Realist Literature" />
+                        <f:selectItem itemValue="Mystery" itemLabel="Mystery" />
+                    </h:selectOneMenu>
+
+                    <h:outputText value="Date Added" />
+                    <h:inputText value="#{createBookBean.dateAdded}" required="true" requiredMessage="Region must be provided"/>
+
+                    <h:outputText value="Synopsis" />
+                    <h:inputText value="#{createBookBean.synopsis}" required="true" requiredMessage="Surface area must be provided"/>
+
+                    <h:outputText value="Thumbnail" />
+                    <h:inputText value="#{createBookBean.thumbnail}"/>
+
+                    <h:commandLink value="Create" 
+                                   action="#{createBookBean.create}" 
+                                   onclick="if (!confirm('Are you sure?'))
+                                       return false" />
+                    <h:commandLink value="Admin Panel/Back" action="admin/admin-index" />
+
+                </h:panelGrid>
+            </h:form>
+        </div>
+    </h:body>
+</html>

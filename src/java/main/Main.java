@@ -112,5 +112,40 @@ public class Main {
             book.getReviewList().forEach(r -> System.out.println(r.getReviewStar()));
         });
     }
+    
+//    private void updateAllOrders(String customerId) {
+//        EntityManager em = PersistenceUtil.getEntityManager();
+//        List<Orders> ordList = em.merge(em);
+//        
+//        ordList.stream()
+//                .filter(order -> order.customer_id == customerId)
+//                .map(ord -> ord.supplier.toUpperCase())
+//        
+//    }
+    
+//    public void CustomerResponse readCustomer(RequestData request) {
+//        List<Oders> ordersList = em.createQuery("select o from Orders o where o.customer_id = :cId")
+//                .setParameter("cId", request.customerId)
+//                .getResultList();
+//        ordersList
+//                .stream
+//                .filter(order -> order.getOrder_date.before(request.after) && order.getOrder_date.after(request.before))
+//                .collect(toList);
+//        
+//        CustomerData customerData = new CustomerData();
+//        customerData.setFullName();
+//        customerData.setOrderNumber(allOders);
+//        customerData.setAllMoney(sum);
+//        
+//        String fullCustName = odersList.get(0).getCustomer().getName + odersList.get(0).getCustomer().getSurname;
+//        int allOrders = ordersList.stream().count();
+//        double allMoney = ordersList.stream().mapToDouble(o -> o.getAmount()).sum();
+//        
+//        CustomerResponse response = new CustomerResponse;
+//        response.setCustomerData(customerData);
+//        
+//        
+//        return response;
+//    }
 
 }

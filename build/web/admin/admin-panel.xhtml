@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Admin Panel</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <div style="display: flex;">
+            <div style="float: left; width: 47%; border-style: solid; border-color: blue">
+                <h1>Manage Books</h1>
+                <h:form>
+                    <h:panelGrid columns="2">
+                        <h:outputText value="Book Title" />
+                        <h:inputText value="#{adminBean.filterBookTitle}" />
+
+
+                        <h:commandLink value="Filter" action="#{adminBean.filterBook}" />
+                        <h:commandLink value="Create" action="/create-book" />
+                    </h:panelGrid>
+
+                    <h1>Listing #{adminBean.bookList.size()} Books</h1>
+                    
+                    <h:dataTable value="#{adminBean.bookList}" 
+                                 var="book" 
+                                 styleClass="order-table"
+                                 headerClass="table-header"
+                                 rowClasses="table-odd-row,table-even-row">
+                        <h:column>
+                            <f:facet name="header">Title</f:facet>
+                            <h:link value="#{book.title}" outcome="/book-details">
+                                <f:param name="bookId" value="#{book.id}" />
+                            </h:link>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Author</f:facet>
+                                #{book.author}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Publishing House</f:facet>
+                                #{book.publishingHouse}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Genre</f:facet>
+                                #{book.genre}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header"></f:facet>
+                            <h:commandLink value="Delete" 
+                                           action="#{adminBean.removeBook(book.id)}"
+                                           onclick="if (!confirm('Are you sure?'))
+                                           return false"/>
+                        </h:column>
+                    </h:dataTable>
+
+
+                </h:form>
+            </div>
+
+            <div style="float: right; width: 2%"></div>
+
+            <div style="float: right; width: 47%; border-style: solid; border-color: black">
+                <h1>Manage Users</h1>
+            </div>
+            <!--<div style="clear:both; font-size:1px;"></div>-->
+        </div>
+
+    </h:body>
+</html>
