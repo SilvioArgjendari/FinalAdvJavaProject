@@ -10,12 +10,25 @@ and open the template in the editor.
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
-        <title>Show attributes</title>
+        <title>Personal Info</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
     <h:body>
-        <h:outputText value="Has user" rendered="#{userBean.hasCurrentUser()}" />
-        <div></div>
+        <nav>
+            <div>
+                <h1>Welcome #{userBean.currentUser.name} #{userBean.currentUser.surname}!</h1>
+                <h:form>
+                    <h:commandLink value="Log In" action="login" rendered="#{!userBean.hasCurrentUser()}"/>
+
+                    <h:commandLink value="Log Out" action="#{userBean.logout}" rendered="#{userBean.hasCurrentUser()}"/>
+                </h:form>
+            </div>
+        </nav>
+        
+        <div>
+            <br/>
+        </div>
+        <h2>User Information</h2>
         <h:panelGrid columns="2">
             <h:outputText value="Name: "/>
             <h:outputText value="#{userBean.currentUser.name}" />
@@ -26,5 +39,8 @@ and open the template in the editor.
             <h:outputText value="Email: "/>
             <h:outputText value="#{userBean.currentUser.email}" />
         </h:panelGrid>
+        <h:form>
+            <h:commandLink value="Back" action="index" />
+        </h:form>
     </h:body>
 </html>

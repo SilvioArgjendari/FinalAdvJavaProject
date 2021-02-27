@@ -9,7 +9,7 @@ and open the template in the editor.
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Change</title>
+        <title>Create Book</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
     <h:body>
@@ -18,19 +18,19 @@ and open the template in the editor.
                 <h:panelGrid columns="2">
                     
                     <h:outputText value="Title" />
-                    <h:inputText value="#{createBookBean.title}" required="true" requiredMessage="Code must be provided" />
+                    <h:inputText value="#{createBookBean.title}" required="true" requiredMessage="Title must be provided!" />
 
                     <h:outputText value="Author" />
-                    <h:inputText value="#{createBookBean.author}" required="true" requiredMessage="Code2 must be provided"/>
+                    <h:inputText value="#{createBookBean.author}" required="true" requiredMessage="Author must be provided!"/>
 
                     <h:outputText value="Publishing House" />
-                    <h:inputText value="#{createBookBean.publishingHouse}" required="true" requiredMessage="Name must be provided"/>
+                    <h:inputText value="#{createBookBean.publishingHouse}" required="true" requiredMessage="Publishing House must be provided!"/>
                     
                     <h:outputText value="Publishing Year" />
-                    <h:inputText value="#{createBookBean.publicationYear}" required="true" requiredMessage="Name must be provided"/>
+                    <h:inputText value="#{createBookBean.publicationYear}" required="true" requiredMessage="Publishing Year must be provided!"/>
 
                     <h:outputText value="Genre" />
-                    <h:selectOneMenu value="#{createBookBean.genre}" required="true" requiredMessage="Continent must be provided" >
+                    <h:selectOneMenu value="#{createBookBean.genre}" required="true" requiredMessage="Genre must be provided!" >
                         <f:selectItem itemValue="Adventure" itemLabel="Adventure" />
                         <f:selectItem itemValue="Historical" itemLabel="Historical" />
                         <f:selectItem itemValue="Fantasy" itemLabel="Fantasy" />
@@ -43,10 +43,10 @@ and open the template in the editor.
                     </h:selectOneMenu>
 
                     <h:outputText value="Date Added" />
-                    <h:inputText value="#{createBookBean.dateAdded}" required="true" requiredMessage="Region must be provided"/>
+                    <h:inputText value="#{createBookBean.dateAdded}" required="true" requiredMessage="Date Aded must be provided!"/>
 
                     <h:outputText value="Synopsis" />
-                    <h:inputText value="#{createBookBean.synopsis}" required="true" requiredMessage="Surface area must be provided"/>
+                    <h:inputText value="#{createBookBean.synopsis}" />
 
                     <h:outputText value="Thumbnail" />
                     <h:inputText value="#{createBookBean.thumbnail}"/>
@@ -55,9 +55,12 @@ and open the template in the editor.
                                    action="#{createBookBean.create}" 
                                    onclick="if (!confirm('Are you sure?'))
                                        return false" />
-                    <h:commandLink value="Admin Panel/Back" action="admin/admin-index" />
 
                 </h:panelGrid>
+                
+            </h:form>
+            <h:form>
+                <h:commandLink value="Back" action="admin/admin-panel" />
             </h:form>
         </div>
     </h:body>

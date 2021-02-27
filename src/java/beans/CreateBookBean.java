@@ -8,7 +8,6 @@ package beans;
 
 import controller.BookController;
 import datatier.persistence.entities.Book;
-import java.util.Date;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -28,9 +27,9 @@ public class CreateBookBean {
     private String title;
     private String author;
     private String publishingHouse;
-    private Date publicationYear;
+    private String publicationYear;
     private String genre;
-    private Date dateAdded;
+    private String dateAdded;
     private String synopsis;
     private String thumbnail;
     
@@ -58,7 +57,7 @@ public class CreateBookBean {
         BookController.getInstance().store(book);
         
         adminBean.loadBooks();
-        return "admin-panel";
+        return "admin/admin-panel";
     }
     
     
@@ -103,11 +102,11 @@ public class CreateBookBean {
         this.publishingHouse = publishingHouse;
     }
 
-    public Date getPublicationYear() {
+    public String getPublicationYear() {
         return publicationYear;
     }
 
-    public void setPublicationYear(Date publicationYear) {
+    public void setPublicationYear(String publicationYear) {
         this.publicationYear = publicationYear;
     }
 
@@ -119,11 +118,11 @@ public class CreateBookBean {
         this.genre = genre;
     }
 
-    public Date getDateAdded() {
+    public String getDateAdded() {
         return dateAdded;
     }
 
-    public void setDateAdded(Date dateAdded) {
+    public void setDateAdded(String dateAdded) {
         this.dateAdded = dateAdded;
     }
 

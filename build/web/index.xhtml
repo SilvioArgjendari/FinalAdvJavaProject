@@ -5,78 +5,158 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
-        <title>Index Page</title>
+        <title>Main Page</title>
     </h:head>
     <h:body>
         <nav>
             <div>
-                <h1>Welcome #{userBean.currentUser.name} #{userBean.currentUser.surname}</h1>
+                <h1>Welcome #{userBean.currentUser.name} #{userBean.currentUser.surname}!</h1>
                 <h:form>
-                    <h:commandLink value="Log In" action="login.xhtml" rendered="#{!userBean.hasCurrentUser()}"/>
-
-                    <h:commandLink value="Log Out" action="#{userBean.logout}" rendered="#{userBean.hasCurrentUser()}"/>
-                </h:form>
-                <h:form>
-                    <h:commandLink value="Profile" action="profile.xhtml" rendered="#{userBean.hasCurrentUser()}"/>
+                    <h:panelGrid columns="8">
+                        <h:commandLink value="Update Profile" action="profile" rendered="#{userBean.hasCurrentUser()}"/>
+                        <h:outputText value="   " />
+                        <h:commandLink value="Log In" action="login" rendered="#{!userBean.hasCurrentUser()}"/>
+                        <h:outputText value="   " />
+                        <h:commandLink value="My Reviews" action="my-reviews" rendered="#{userBean.isStandard()}"/>
+                        <h:outputText value="   " />
+                        <h:commandLink action="show-attributes" value="See Attributes" rendered="#{userBean.hasCurrentUser()}"/>
+                        <h:outputText value="   " />
+                        <h:commandLink value="Log Out" action="#{userBean.logout}" rendered="#{userBean.hasCurrentUser()}"/>
+                    </h:panelGrid>
                 </h:form>
                 
-                <h:form>
-                    <h:commandLink action="show-attributes" value="See Attributes"/>
-                </h:form>
             </div>
         </nav>
-        
+
         <h:form>
-            <h1>Listing #{bookBean.allBooks.size()} Books</h1>
-            <h:dataTable value="#{bookBean.allBooks}" var="bk">
+            <h2>Listing #{bookBean.topRatedBooks.size()} Top Rated Books</h2>
+            <h:dataTable value="#{bookBean.topRatedBooks}" var="top">
                 <h:column>
                     <f:facet name="header">Title</f:facet>
-                        #{bk.title}
+                    <h:link value="#{top.title}" outcome="book-details">
+                        <f:param name="bookId" value="#{top.id}" />
+                    </h:link>
                 </h:column>
                 <h:column>
                     <f:facet name="header">Author</f:facet>
-                        #{bk.author}
+                        #{top.author}
                 </h:column>
                 <h:column>
                     <f:facet name="header">Genre</f:facet>
-                        #{bk.genre}
+                        #{top.genre}
                 </h:column>
                 <h:column>
-                    <f:facet name="header">Synopsis</f:facet>
-                        #{bk.synopsis}
+                    <f:facet name="header">Publishing House</f:facet>
+                        #{top.publishingHouse}
                 </h:column>
                 <h:column>
-                    <f:facet name="header">Publication Year</f:facet>
-                        #{bk.publicationYear.year + 1900}
+                    <f:facet name="header">Average Review</f:facet>
+                        #{bookBean.getAverageReview(top.id)}
                 </h:column>
             </h:dataTable>
             <br/>
-            <br/>
-            <h1>Listing #{bookBean.recentlyAddedBooks.size()} Recently Added Books</h1>
-            <h:dataTable value="#{bookBean.recentlyAddedBooks}" var="b">
+            <h2>Listing #{bookBean.recentlyAddedBooks.size()} Recently Added Books</h2>
+            <h:dataTable value="#{bookBean.recentlyAddedBooks}" var="rec">
                 <h:column>
                     <f:facet name="header">Title</f:facet>
-                        #{b.title}
+                    <h:link value="#{rec.title}" outcome="book-details">
+                        <f:param name="bookId" value="#{rec.id}" />
+                    </h:link>
                 </h:column>
                 <h:column>
                     <f:facet name="header">Author</f:facet>
-                        #{b.author}
+                        #{rec.author}
                 </h:column>
                 <h:column>
                     <f:facet name="header">Genre</f:facet>
-                        #{b.genre}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">Synopsis</f:facet>
-                        #{b.synopsis}
+                        #{rec.genre}
                 </h:column>
                 <h:column>
                     <f:facet name="header">Publication Year</f:facet>
-                        #{b.publicationYear.year + 1900}
+                        #{rec.publicationYear}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Avg.Review</f:facet>
+                        #{bookBean.getAverageReview(rec.id)}
                 </h:column>
             </h:dataTable>
+
+            <br/>
+            <br/>
+
+            <h:panelGrid columns="2">
+                <h:outputText value="Title"/>
+                <h:inputText value="#{bookBean.filterTitle}" />
+
+                <h:outputText value="Author"/>
+                <h:inputText value="#{bookBean.filterAuthor}" />
+
+                <h:outputText value="Genre"/>
+                <h:selectOneMenu value="#{bookBean.filterGenre}">
+                    <f:selectItem itemValue="Adventure" itemLabel="Adventure" />
+                    <f:selectItem itemValue="Historical" itemLabel="Historical" />
+                    <f:selectItem itemValue="Fantasy" itemLabel="Fantasy" />
+                    <f:selectItem itemValue="Literary Fiction" itemLabel="Literary Fiction" />
+                    <f:selectItem itemValue="Educational" itemLabel="Educational" />
+                    <f:selectItem itemValue="Horror" itemLabel="Horror" />
+                    <f:selectItem itemValue="Science Fiction" itemLabel="Science Fiction" />
+                    <f:selectItem itemValue="Realist Literature" itemLabel="Realist Literature" />
+                    <f:selectItem itemValue="Mystery" itemLabel="Mystery" />
+                </h:selectOneMenu>
+            </h:panelGrid>
+
+            <h:panelGrid columns="4">
+                <h:outputText value="Avg. Review"/>
+                <h:selectOneMenu value="#{bookBean.lowerRange}">
+                    <f:selectItem itemValue="0" itemLabel="0" />
+                    <f:selectItem itemValue="1" itemLabel="1" />
+                    <f:selectItem itemValue="2" itemLabel="2" />
+                    <f:selectItem itemValue="3" itemLabel="3" />
+                    <f:selectItem itemValue="4" itemLabel="4" />
+                    <f:selectItem itemValue="5" itemLabel="5" />
+                </h:selectOneMenu>
+                <h:outputText value=" - " />
+                <h:selectOneMenu value="#{bookBean.upperRange}">
+                    <f:selectItem itemValue="5" itemLabel="5" />
+                    <f:selectItem itemValue="4" itemLabel="4" />
+                    <f:selectItem itemValue="3" itemLabel="3" />
+                    <f:selectItem itemValue="2" itemLabel="2" />
+                    <f:selectItem itemValue="1" itemLabel="1" />
+                </h:selectOneMenu>
+            </h:panelGrid>
+            <h:commandButton value="Filter" action="#{bookBean.filter()}"/>
+            
+            <br/>
+            
+            <h2>Listing #{bookBean.filteredBooks.size()} Books</h2>
+            <h:dataTable value="#{bookBean.filteredBooks}" var="filt">
+                <h:column>
+                    <f:facet name="header">Title</f:facet>
+                    <h:link value="#{filt.title}" outcome="book-details">
+                        <f:param name="bookId" value="#{filt.id}" />
+                    </h:link>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Author</f:facet>
+                        #{filt.author}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Genre</f:facet>
+                        #{filt.genre}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Publication Year</f:facet>
+                        #{filt.publicationYear}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Avg.Review</f:facet>
+                        #{bookBean.getAverageReview(filt.id)}
+                </h:column>
+            </h:dataTable>
+            
+            
         </h:form>
-        
+
     </h:body>
 </html>
 

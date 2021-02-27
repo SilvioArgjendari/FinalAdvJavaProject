@@ -72,6 +72,9 @@ public class UserDAO implements UserIDAO {
         EntityManager entityManager = PersistenceUtil.getEntityManager();
         try {
             entityManager.getTransaction().begin();
+            if (!entityManager.contains(user)) {
+                user = entityManager.merge(user);
+            }
             entityManager.remove(user);
             entityManager.getTransaction().commit();
         }

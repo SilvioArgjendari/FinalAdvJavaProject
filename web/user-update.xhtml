@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Update User</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <div>
+            <h:form>
+                <h:outputText value="#{flash.confirmationMessage}"/> 
+                <h:panelGrid columns="2">
+                    <h:outputText value="Hashcode" />
+                    <h:outputText value="#{updateUserBean.hashCode()}" />
+
+                    <h:outputText value="User ID" />
+                    <h:inputText value="#{updateUserBean.id}" readonly="true"/>
+                    
+                    <h:outputText value="Name" />
+                    <h:inputText value="#{updateUserBean.name}" required="true" requiredMessage="Name must be provided!" />
+
+                    <h:outputText value="Surname" />
+                    <h:inputText value="#{updateUserBean.surname}" required="true" requiredMessage="Surname must be provided!"/>
+
+                    <h:outputText value="Email" />
+                    <h:inputText value="#{updateUserBean.email}" required="true" requiredMessage="Email must be provided!"/>
+                    
+                    <h:outputText value="Password" />
+                    <h:inputSecret value="#{updateUserBean.password}" required="true" requiredMessage="Password must be provided!"/>
+
+                    <h:outputText value="User Type" />
+                    <h:selectOneMenu value="#{updateUserBean.type}" required="true" requiredMessage="User Type must be provided!" >
+                        <f:selectItem itemValue="admin" itemLabel="admin" />
+                        <f:selectItem itemValue="standard" itemLabel="standard" />
+                    </h:selectOneMenu>
+
+                    <h:commandLink value="Update" 
+                                   action="#{updateUserBean.update}" 
+                                   onclick="if (!confirm('Are you sure?'))
+                                       return false" />
+                    <!--<h:commandLink value="Admin Panel" action="admin/admin-panel" />-->
+                    <h:link value="Back" outcome="user-details">
+                        <f:param name="id" value="#{updateUserBean.id}" />
+                    </h:link>
+
+                </h:panelGrid>
+            </h:form>
+<!--            <h:form>
+                
+            </h:form>-->
+        </div>
+    </h:body>
+</html>

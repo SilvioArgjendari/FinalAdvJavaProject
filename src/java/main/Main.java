@@ -11,7 +11,9 @@ import datatier.persistence.entities.Book;
 import datatier.persistence.entities.Review;
 import datatier.persistence.entities.User;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 
 /**
@@ -33,10 +35,15 @@ public class Main {
 //        app.allBooks();
 //        app.go();
 //        app.findABook();        // Works
-        app.getAuthedUser();    // Works
+//        app.getAuthedUser();    // Works
 //        app.allreviews();       // Works
 //        app.findReviewsOfFirstBook();   // Works
 //        app.oldMethod();      // Works
+//        app.deleteUser();
+//        app.getBestRatedBooks();
+//        app.getAllReviewsOfAUser();
+        app.latestBooks();
+//        System.out.println(app.getAverageReview(2));
         
     }
     
@@ -112,6 +119,62 @@ public class Main {
             book.getReviewList().forEach(r -> System.out.println(r.getReviewStar()));
         });
     }
+    
+    private void deleteUser() {
+        User user = UserController.getInstance().show(5);
+        UserController.getInstance().destroy(user);
+    }
+    
+    private void getBestRatedBooks() {
+        List<Book> temp = bC.index();
+        
+        bookList = temp.stream()
+                .sorted(Comparator.comparingDouble((Book b) -> b.getReviewList()
+                                                                .stream()
+                                                                .mapToDouble(review -> review.getReviewStar())
+                                                                                                .average()
+                                                                                                .orElse(0.0))
+                        .reversed())
+                .limit(2)
+                .collect(Collectors.toList());
+    }
+    
+    public Double getAverageReview(Integer id) {
+        Book book = BookController.getInstance().show(id);
+        
+        return book.getReviewList()
+                .stream()
+                .mapToDouble(r -> r.getReviewStar())
+                .average()
+                .orElse(0.0);
+        
+    }
+    
+    public void getAllReviewsOfAUser() {
+        List<Review> temp = ReviewController.getInstance().index();
+        
+        reviewList = temp.stream()
+                .filter(review -> review.getReviewPK().getReviewerId() == 2)
+                .collect(Collectors.toList());
+        
+        reviewList.forEach(review -> 
+                                System.out.println(review.getUser().getName() 
+                                        + " has made a review of "
+                                        + review.getReviewStar() 
+                                        + " to " + review.getBook().getTitle()));
+    }
+    
+    private void latestBooks() {
+        List<Book> dummy = BookController.getInstance().index();
+        
+        bookList = dummy.stream()
+                .sorted(Comparator.comparingDouble((Book b) -> b.getId()).reversed())
+                .limit(5)
+                .collect(Collectors.toList());
+        
+        bookList.forEach(b -> System.out.println(b.getTitle()));
+    }
+    
     
 //    private void updateAllOrders(String customerId) {
 //        EntityManager em = PersistenceUtil.getEntityManager();

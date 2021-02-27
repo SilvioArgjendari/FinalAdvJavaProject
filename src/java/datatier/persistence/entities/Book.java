@@ -58,15 +58,13 @@ public class Book implements Serializable {
     private String publishingHouse;
     @Basic(optional = false)
     @Column(name = "publication_year")
-    @Temporal(TemporalType.DATE)
-    private Date publicationYear;
+    private String publicationYear;
     @Basic(optional = false)
     @Column(name = "genre")
     private String genre;
     @Basic(optional = false)
     @Column(name = "date_added")
-    @Temporal(TemporalType.DATE)
-    private Date dateAdded;
+    private String dateAdded;
     @Column(name = "synopsis")
     private String synopsis;
     @Column(name = "thumbnail")
@@ -81,7 +79,7 @@ public class Book implements Serializable {
         this.id = id;
     }
 
-    public Book(Integer id, String title, String author, String publishingHouse, Date publicationYear, String genre, Date dateAdded) {
+    public Book(Integer id, String title, String author, String publishingHouse, String publicationYear, String genre, String dateAdded) {
         this.id = id;
         this.title = title;
         this.author = author;
@@ -123,11 +121,11 @@ public class Book implements Serializable {
         this.publishingHouse = publishingHouse;
     }
 
-    public Date getPublicationYear() {
+    public String getPublicationYear() {
         return publicationYear;
     }
 
-    public void setPublicationYear(Date publicationYear) {
+    public void setPublicationYear(String publicationYear) {
         this.publicationYear = publicationYear;
     }
 
@@ -139,11 +137,11 @@ public class Book implements Serializable {
         this.genre = genre;
     }
 
-    public Date getDateAdded() {
+    public String getDateAdded() {
         return dateAdded;
     }
 
-    public void setDateAdded(Date dateAdded) {
+    public void setDateAdded(String dateAdded) {
         this.dateAdded = dateAdded;
     }
 

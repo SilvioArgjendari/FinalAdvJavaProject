@@ -9,7 +9,7 @@ and open the template in the editor.
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title></title>
+        <title>#{bookDetailBean.book.title}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
     <h:body>
@@ -25,7 +25,7 @@ and open the template in the editor.
                     <h:outputText value="#{bookDetailBean.hashCode()}"/>
 
                     <h:outputText value="Thumbnail" />
-                    <h:outputText value="#{bookDetailBean.book.thumbnail}"/>
+                    <h:graphicImage value="#{bookDetailBean.book.thumbnail}"  height="380px" width="280px"/> 
                     
                     <h:outputText value="Title" />
                     <h:outputText value="#{bookDetailBean.book.title}"/>
@@ -48,14 +48,20 @@ and open the template in the editor.
                     <h:outputText value="Synopsis" />
                     <h:outputText value="#{bookDetailBean.book.synopsis}"/>
                     
+                    <h:outputText value="Average Review" />
+                    <h:outputText value="#{bookBean.getAverageReview(bookDetailBean.bookId)}"/>
 
                     <f:facet name = "footer">
                         <h:panelGroup>
-                            <h:commandLink value="Back" action="admin/admin-panel" />
+                            <h:commandLink value="Back" action="admin/admin-panel" rendered="#{userBean.isAdmin()}"/>
+                            <h:commandLink value="Back" action="index" rendered="#{!userBean.isAdmin()}"/>
                             <h:outputText value=" " />
-                            <h:commandLink value="Update" action="book-update" >
+                            <h:commandLink value="Update" action="book-update" rendered="#{userBean.isAdmin()}">
                                 <f:param name="bookId" value="#{bookDetailBean.bookId}" />
                             </h:commandLink>
+<!--                            <h:commandLink value="Add Review" ">
+                                <f:param name="bookId"/>
+                            </h:commandLink>-->
                         </h:panelGroup>
                     </f:facet>            
 

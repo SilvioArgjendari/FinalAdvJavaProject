@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Create User</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <div>
+            <h:form>
+                <h:panelGrid columns="2">
+
+                    <h:outputText value="Name" />
+                    <h:inputText value="#{createUserBean.name}" required="true" requiredMessage="Name must be provided" />
+
+                    <h:outputText value="Surname" />
+                    <h:inputText value="#{createUserBean.surname}" required="true" requiredMessage="Surname must be provided"/>
+
+                    <h:outputText value="Email" />
+                    <h:inputText value="#{createUserBean.email}" required="true" requiredMessage="Email must be provided"/>
+
+                    <h:outputText value="Password" />
+                    <h:inputSecret value="#{createUserBean.password}" required="true" requiredMessage="Password must be provided"/>
+                    
+                    <h:outputText value="User Type" />
+                    <h:selectOneMenu value="#{createUserBean.type}" required="true" requiredMessage="User type must be provided" >
+                        <f:selectItem itemValue="admin" itemLabel="admin" />
+                        <f:selectItem itemValue="standard" itemLabel="standard" />
+                    </h:selectOneMenu>
+
+                    <h:commandLink value="Create" 
+                                   action="#{createUserBean.create}" 
+                                   onclick="if (!confirm('Are you sure?'))
+                                               return false" />
+                </h:panelGrid>
+
+            </h:form>
+            <h:form>
+                <h:commandLink value="Back" action="admin/admin-panel" />
+            </h:form>
+        </div>
+    </h:body>
+</html>

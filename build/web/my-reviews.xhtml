@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>My Reviews</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <nav>
+            <div>
+                <h1>Welcome #{userBean.currentUser.name} #{userBean.currentUser.surname}!</h1>
+                <h:form>
+                    <h:commandLink value="Log Out" action="#{userBean.logout}" rendered="#{userBean.hasCurrentUser()}"/>
+                </h:form>
+            </div>
+        </nav>
+
+        <br/>
+        <br/>
+
+        <div>
+            <h:form>
+                <h:dataTable value="#{myReviewsBean.loadList(userBean.currentUser.id)}" var="review">
+                    <h:column>
+                        <f:facet name="header">Book Title</f:facet>
+                            #{review.book.title}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Review Star</f:facet>
+                            #{review.reviewStar}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Comment</f:facet>
+                            #{review.comment}
+                    </h:column>
+                </h:dataTable>
+            </h:form>
+        </div>
+        <br/>
+        <h:form>
+            <h:commandLink value="Back" action="index" rendered="#{userBean.isStandard()}"/>
+        </h:form>
+        
+        <h:form>
+            <h:commandLink value="Back" action="admin/admin-panel" rendered="#{userBean.isAdmin()}"/>
+        </h:form>
+
+    </h:body>
+</html>

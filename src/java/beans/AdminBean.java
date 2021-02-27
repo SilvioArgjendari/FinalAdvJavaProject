@@ -6,9 +6,9 @@
 package beans;
 
 import controller.BookController;
+import controller.UserController;
 import datatier.persistence.entities.Book;
 import datatier.persistence.entities.User;
-import javax.inject.Named;
 import javax.faces.bean.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
@@ -36,6 +36,7 @@ public class AdminBean implements Serializable {
      */
     public AdminBean() {
         loadBooks();
+        loadUsers();
     }
 
     public String getFilterUserName() {
@@ -88,6 +89,7 @@ public class AdminBean implements Serializable {
     
     public String filterBook() {
         List<Book> temp = BookController.getInstance().index();
+        
         bookList = temp.stream()
                 .filter(book -> book.getTitle().toLowerCase().contains(filterBookTitle.toLowerCase()))
                 .collect(Collectors.toList());
@@ -95,12 +97,22 @@ public class AdminBean implements Serializable {
         return "";
     }
     
-    public void filterUser() {
-        // not finished
+    public String filterUser() {
+        List<User> tempp = UserController.getInstance().index();
+        
+        userList = tempp.stream()
+                .filter(user -> user.getName().toLowerCase().contains(filterUserName.toLowerCase()))
+                .collect(Collectors.toList());
+        
+        return "";
     }
     
     public void loadBooks() {
         bookList = BookController.getInstance().index();
+    }
+    
+    public void loadUsers() {
+        userList = UserController.getInstance().index();
     }
     
     public void removeBook(Integer id) {
@@ -108,6 +120,13 @@ public class AdminBean implements Serializable {
         BookController.getInstance().destroy(book);
         
         loadBooks();
+    }
+    
+    public void removeUser(Integer id) {
+        User user = UserController.getInstance().show(id);
+        UserController.getInstance().destroy(user);
+        
+        loadUsers();
     }
     
     

@@ -9,7 +9,7 @@ and open the template in the editor.
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Change</title>
+        <title>Update Book</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
     <h:body>
@@ -61,13 +61,16 @@ and open the template in the editor.
                                    action="#{updateBookBean.update}" 
                                    onclick="if (!confirm('Are you sure?'))
                                        return false" />
-                    <h:commandLink value="Admin Panel" action="admin/admin-index" />
+<!--                    <h:commandLink value="Admin Panel" action="admin/admin-panel" />-->
                     <h:link value="Back" outcome="book-details">
                         <f:param name="bookId" value="#{updateBookBean.bookId}" />
                     </h:link>
 
                 </h:panelGrid>
             </h:form>
+<!--            <h:form>
+                
+            </h:form>-->
 
         </div>
     </h:body>

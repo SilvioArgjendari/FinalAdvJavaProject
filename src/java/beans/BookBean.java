@@ -13,7 +13,6 @@ import java.util.Comparator;
 import java.util.List;
 //import javax.inject.Inject;
 //import javax.inject.Named;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 //import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -32,7 +31,15 @@ public class BookBean implements Serializable {
     private List<Book> allBooks;
     private List<Book> recentlyAddedBooks;
     private List<Book> topRatedBooks;
+    private List<Book> filteredBooks;
+    
     private Book book;
+    
+    private String filterTitle;
+    private String filterAuthor;
+    private String lowerRange;
+    private String upperRange;
+    private String filterGenre;
     
     /**
      * Creates a new instance of BookBean
@@ -41,6 +48,7 @@ public class BookBean implements Serializable {
     public BookBean() {
         loadList();
         mostRecentlyAdded();
+        bestRated();
     }
     
 //    @PostConstruct
@@ -83,6 +91,55 @@ public class BookBean implements Serializable {
     public void setBook(Book book) {
         this.book = book;
     }
+
+    public List<Book> getFilteredBooks() {
+        return filteredBooks;
+    }
+
+    public void setFilteredBooks(List<Book> filteredBooks) {
+        this.filteredBooks = filteredBooks;
+    }
+
+    public String getFilterTitle() {
+        return filterTitle;
+    }
+
+    public void setFilterTitle(String filterTitle) {
+        this.filterTitle = filterTitle;
+    }
+
+    public String getFilterAuthor() {
+        return filterAuthor;
+    }
+
+    public void setFilterAuthor(String filterAuthor) {
+        this.filterAuthor = filterAuthor;
+    }
+
+    public String getLowerRange() {
+        return lowerRange;
+    }
+
+    public void setLowerRange(String lowerRange) {
+        this.lowerRange = lowerRange;
+    }
+
+    public String getUpperRange() {
+        return upperRange;
+    }
+
+    public void setUpperRange(String upperRange) {
+        this.upperRange = upperRange;
+    }
+
+    public String getFilterGenre() {
+        return filterGenre;
+    }
+
+    public void setFilterGenre(String filterGenre) {
+        this.filterGenre = filterGenre;
+    }
+    
     
     
     
@@ -99,34 +156,67 @@ public class BookBean implements Serializable {
         return "index";
     }
     
-    public String prepareView(Book book) {
-        if (book != null)
-            this.book = book;
-        return "view-book";
-    }
-    
-    public String prepareCreate() {
-        if (userBean.hasCurrentUser()) {
-            return "login";
-        }
-        book = new Book();
-        return "index";    
-    }
-    
     public void mostRecentlyAdded() {
         List<Book> lst = BookController.getInstance().index();
         
         recentlyAddedBooks = lst.stream()
                 .sorted(Comparator.comparingInt((Book b) -> b.getId())
                         .reversed())
-//                .limit(2)
+                .limit(5)
                 .collect(Collectors.toList());   
     }
     
-//    public void bestRated() {
-//        List<Book> lst = BookController.getInstance().index();
+    public void bestRated() {
+        List<Book> temp = BookController.getInstance().index();
+        
+        topRatedBooks = temp.stream()
+                .sorted(Comparator.comparingDouble((Book b) -> b.getReviewList()
+                                                                .stream()
+                                                                .mapToDouble(review -> review.getReviewStar())
+                                                                                                .average()
+                                                                                                .orElse(0.0))
+                                    .reversed())
+                .limit(5)
+                .collect(Collectors.toList());
+    }
+    
+    public Double getAverageReview(Integer id) {
+        Book book = BookController.getInstance().show(id);
+        
+        Double rate =  book.getReviewList()
+                .stream()
+                .mapToDouble(r -> r.getReviewStar())
+                .average()
+                .orElse(0.0);
+        
+        return Math.round(rate * 10.0) / 10.0;
+    }
+    
+    private boolean isPresent(String param) {
+        return param != null && !param.trim().isEmpty();
+    }
+    
+    public String filter() {
+        List<Book> temp = BookController.getInstance().index();
+        
+        temp.stream()
+                .filter(book -> book.getTitle().toLowerCase().contains(filterTitle.toLowerCase()))
+                .filter(book -> book.getGenre().equals(filterGenre))
+                .filter(book -> book.getAuthor().toLowerCase().contains(filterAuthor.toLowerCase()))
+                .filter(book -> book.getReviewList().stream().mapToDouble(r -> r.getReviewStar()).average().orElse(0) > Integer.parseInt(lowerRange) && 
+                                book.getReviewList().stream().mapToDouble(r -> r.getReviewStar()).average().orElse(0) < Integer.parseInt(upperRange))
+                .collect(Collectors.toList());
+        filteredBooks = temp;
+        
+        return "";
+    }
+    
+    
+    
+    
+    
+//    public String filter() {
 //        
-//        topRatedBooks = lst.stream()
-//                .
 //    }
+    
 }

@@ -51,8 +51,17 @@ public class UserBean implements Serializable {
     }
     
     public boolean isAdmin() {
-        return currentUser.getType().equals("admin");
+        if (hasCurrentUser())
+            return currentUser.getType().equals("admin");
+        return false;
     }
+    
+    public boolean isStandard() {
+        if (hasCurrentUser())
+            return currentUser.getType().equals("standard");
+        return false;
+    }
+    
 
 //    public User getNewUser() {
 //        return newUser;
@@ -140,6 +149,12 @@ public class UserBean implements Serializable {
         clearAttributes();
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return "index";
+    }
+    
+    public String logoutAdmin() {
+        clearAttributes();
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        return "/index";
     }
 
     public String goToProfile() {

@@ -31,9 +31,9 @@ public class UpdateBookBean {
     private String title;
     private String author;
     private String publishingHouse;
-    private Date publicationYear;
+    private String publicationYear;
     private String genre;
-    private Date dateAdded;
+    private String dateAdded;
     private String synopsis;
     private String thumbnail;
 
@@ -81,7 +81,7 @@ public class UpdateBookBean {
         BookController.getInstance().update(book);
         
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("confirmationMessage", "Book saved!");
-//        adminBean.loadBooks();
+        adminBean.loadBooks();
     }
 
 //    public AdminBean getAdminBean() {
@@ -124,11 +124,11 @@ public class UpdateBookBean {
         this.publishingHouse = publishingHouse;
     }
 
-    public Date getPublicationYear() {
+    public String getPublicationYear() {
         return publicationYear;
     }
 
-    public void setPublicationYear(Date publicationYear) {
+    public void setPublicationYear(String publicationYear) {
         this.publicationYear = publicationYear;
     }
 
@@ -140,11 +140,11 @@ public class UpdateBookBean {
         this.genre = genre;
     }
 
-    public Date getDateAdded() {
+    public String getDateAdded() {
         return dateAdded;
     }
 
-    public void setDateAdded(Date dateAdded) {
+    public void setDateAdded(String dateAdded) {
         this.dateAdded = dateAdded;
     }
 
