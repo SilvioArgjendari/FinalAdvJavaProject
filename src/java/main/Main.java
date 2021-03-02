@@ -3,9 +3,6 @@ package main;
 import controller.BookController;
 import controller.ReviewController;
 import controller.UserController;
-import datatier.dao.BookDAO;
-import datatier.dao.FactoryDAO;
-import datatier.dao.IDAO;
 import datatier.persistence.PersistenceUtil;
 import datatier.persistence.entities.Book;
 import datatier.persistence.entities.Review;
@@ -20,6 +17,8 @@ import javax.persistence.EntityManager;
  *
  * @author Argjendari
  */
+
+// TEST CLASS
 
 public class Main {
     
@@ -175,40 +174,5 @@ public class Main {
         bookList.forEach(b -> System.out.println(b.getTitle()));
     }
     
-    
-//    private void updateAllOrders(String customerId) {
-//        EntityManager em = PersistenceUtil.getEntityManager();
-//        List<Orders> ordList = em.merge(em);
-//        
-//        ordList.stream()
-//                .filter(order -> order.customer_id == customerId)
-//                .map(ord -> ord.supplier.toUpperCase())
-//        
-//    }
-    
-//    public void CustomerResponse readCustomer(RequestData request) {
-//        List<Oders> ordersList = em.createQuery("select o from Orders o where o.customer_id = :cId")
-//                .setParameter("cId", request.customerId)
-//                .getResultList();
-//        ordersList
-//                .stream
-//                .filter(order -> order.getOrder_date.before(request.after) && order.getOrder_date.after(request.before))
-//                .collect(toList);
-//        
-//        CustomerData customerData = new CustomerData();
-//        customerData.setFullName();
-//        customerData.setOrderNumber(allOders);
-//        customerData.setAllMoney(sum);
-//        
-//        String fullCustName = odersList.get(0).getCustomer().getName + odersList.get(0).getCustomer().getSurname;
-//        int allOrders = ordersList.stream().count();
-//        double allMoney = ordersList.stream().mapToDouble(o -> o.getAmount()).sum();
-//        
-//        CustomerResponse response = new CustomerResponse;
-//        response.setCustomerData(customerData);
-//        
-//        
-//        return response;
-//    }
 
 }

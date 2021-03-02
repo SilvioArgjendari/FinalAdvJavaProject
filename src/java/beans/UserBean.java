@@ -61,7 +61,6 @@ public class UserBean implements Serializable {
             return currentUser.getType().equals("standard");
         return false;
     }
-    
 
 //    public User getNewUser() {
 //        return newUser;

@@ -17,6 +17,9 @@ import java.util.stream.Collectors;
 //import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 /**
  *
@@ -142,7 +145,6 @@ public class BookBean implements Serializable {
     
     
     
-    
     public void loadList() {
         allBooks = BookController.getInstance().index();
     }
@@ -192,31 +194,46 @@ public class BookBean implements Serializable {
         return Math.round(rate * 10.0) / 10.0;
     }
     
-    private boolean isPresent(String param) {
-        return param != null && !param.trim().isEmpty();
+    
+    private boolean paramIsPresent(String paramValue) {
+        return paramValue != null && !paramValue.trim().isEmpty();
+    }
+    
+    private Query constructQuery() {
+        EntityManager em = Persistence
+                .createEntityManagerFactory("FinalAdvJavaProjectPU")
+                .createEntityManager();
+        
+        String ql = "SELECT b FROM Book b WHERE b.id = b.id ";
+        if (paramIsPresent(filterTitle))
+            ql += "AND LOWER(b.title) LIKE LOWER(:title)";
+        if (paramIsPresent(filterAuthor))
+            ql += "AND LOWER(b.author) LIKE LOWER(:author)";
+        if (paramIsPresent(filterGenre))
+            ql += "AND LOWER(b.genre) LIKE LOWER(:genre)";
+        
+        Query query = em.createQuery(ql);
+        
+        if (paramIsPresent(filterTitle))
+            query.setParameter("title", "%" + filterTitle + "%");
+        if (paramIsPresent(filterAuthor))
+            query.setParameter("author", "%" + filterAuthor + "%");
+        if (paramIsPresent(filterGenre))
+            query.setParameter("genre", "%" + filterGenre + "%");
+        
+        return query;
     }
     
     public String filter() {
-        List<Book> temp = BookController.getInstance().index();
+        Query q = constructQuery();
+        List<Book> list = q.getResultList();
         
-        temp.stream()
-                .filter(book -> book.getTitle().toLowerCase().contains(filterTitle.toLowerCase()))
-                .filter(book -> book.getGenre().equals(filterGenre))
-                .filter(book -> book.getAuthor().toLowerCase().contains(filterAuthor.toLowerCase()))
-                .filter(book -> book.getReviewList().stream().mapToDouble(r -> r.getReviewStar()).average().orElse(0) > Integer.parseInt(lowerRange) && 
-                                book.getReviewList().stream().mapToDouble(r -> r.getReviewStar()).average().orElse(0) < Integer.parseInt(upperRange))
+        filteredBooks = list.stream()
+                .filter(book -> getAverageReview(book.getId()) >= Integer.parseInt(lowerRange))
+                .filter(book -> getAverageReview(book.getId()) <= Integer.parseInt(upperRange))
                 .collect(Collectors.toList());
-        filteredBooks = temp;
         
         return "";
     }
-    
-    
-    
-    
-    
-//    public String filter() {
-//        
-//    }
     
 }

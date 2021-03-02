@@ -8,7 +8,6 @@ package beans;
 
 import controller.BookController;
 import datatier.persistence.entities.Book;
-import java.util.Date;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
